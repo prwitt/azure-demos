@@ -230,6 +230,8 @@ Output:
 replicationcontroller "web-controller" created
 ```
 
+**Note:** The Web Replication Controller utilizes a docker image called prenato/myjsapp that is available in my public repository on [Docker Hub](https://hub.docker.com/r/prenato/myjsapp/).
+
 * And finnaly, the Web Service that will expose external access to the web service:
 
 ``` console
@@ -260,7 +262,7 @@ $ kubectl get pvc
 NAME            STATUS    VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 pvc-azuredisk   Bound     pvc-b5939d88-d80a-11e7-851c-0a58ac1f0520   1Gi        RWO            default        12m
 
-# Repplication Controllers to ensure MongoDB has at least one Pod running, and Web has at least two Pods running.
+# Replication Controllers to ensure MongoDB has at least one Pod running, and Web has at least two Pods running.
 
 $ kubectl get rc
 NAME               DESIRED   CURRENT   READY     AGE
