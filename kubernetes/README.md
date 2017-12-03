@@ -271,7 +271,7 @@ NAME               DESIRED   CURRENT   READY     AGE
 mongo-controller   1         1         1         9m
 web-controller     2         2         2         3m
 
-# The Pods were created by the Resource Controllers
+# The Pods were created by the Replication Controllers
 
 $ kubectl get pods
 NAME                     READY     STATUS    RESTARTS   AGE
