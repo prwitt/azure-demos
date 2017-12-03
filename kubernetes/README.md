@@ -32,7 +32,7 @@ $ az group create --name myK8sRG --location westus2
 ```
 
 Output:
-```
+```console
 {
   "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myK8sRG",
   "location": "westus2",
@@ -52,7 +52,7 @@ $ az aks create --resource-group myK8sRG --name myK8sCluster --node-count 1 --ge
 ```
 
 Output:
-```
+```console
 {
   "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourcegroups/myK8sRG/providers/Microsoft.ContainerService/managedClusters/myK8sCluster",
   "location": "westus2",
@@ -78,13 +78,13 @@ Output:
 
 * Get credential
 
-```console
+``` console
 $ az aks get-credentials --resource-group myK8sRG --name myK8sCluster
 
 ```
 
 Output:
-```
+```console
 Merged "myK8sCluster" as current context in /home/<your-home-dir>/.kube/config
 ```
 
@@ -96,7 +96,7 @@ $ kubectl get nodes
 ```
 
 Output:
-```
+```console
 NAME                       STATUS    ROLES     AGE       VERSION
 aks-nodepool1-82441409-0   Ready     agent     2m        v1.7.7
 ```
@@ -108,7 +108,7 @@ Note that at the time this tutorial was written, the default version for the AKS
 
 * From Azure Cloud Shell, run the following command to download the YAML files we'll use to create our application:
 
-``` console
+```console
 $ for i in `echo db-controller.yaml db-service.yaml pvc-azuredisk.yaml web-controller.yaml web-service.yaml`
 do
 wget https://raw.githubusercontent.com/prwitt/azure-demos/master/kubernetes/$i
@@ -126,25 +126,25 @@ The following components will be deployed to support the Database::
 
 To create the disk, run the following command:
 
-``` console
+```console
 From the directory where you have pvc-azuredisk.yaml:
 
 $ kubectl create -f pvc-azuredisk.yaml
 ```
 
 Output:
-```
+```console
 persistentvolumeclaim "pvc-azuredisk" created
 ```
 
 Let's see the private volume creation status:
 
-``` console
+```console
 $ kubectl get pvc
 ```
 
 Output:
-```
+```console
 Name:          pvc-azuredisk
 Namespace:     default
 StorageClass:  default
@@ -173,7 +173,7 @@ $ kubectl create -f db-controller.yaml
 ```
 
 Let's monitor the creation status is **Running**:
-```
+```console
 $ watch kubectl get pods
 
 NAME                     READY     STATUS    RESTARTS   AGE
@@ -183,14 +183,14 @@ mongo-controller-bmz15   1/1       Running   0          2m
 
 * Now, let's create the Service that will expose the access to the Database:
 
-``` console
+```console
 From the directory where you have the file db-service.yaml:
 
 $ kubectl create -f db-service.yaml
 ```
 
 Output:
-```
+```console
 service "mongo" created
 
 ```
@@ -198,7 +198,7 @@ service "mongo" created
 * Let's see what we created so far:
 
 
-``` console
+```console
 $ kubectl get rc
 NAME               DESIRED   CURRENT   READY     AGE
 mongo-controller   1         1         1         4m
@@ -228,7 +228,7 @@ $ kubectl create -f web-controller.yaml
 ```
 
 Output:
-```
+```console
 replicationcontroller "web-controller" created
 ```
 
