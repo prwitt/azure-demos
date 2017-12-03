@@ -4,7 +4,9 @@
 In this tutorial, you will learn how to deploy a Kubernetes Cluster utilizing Azure Kubernetes Services (AKS). The followin steps will help you to accomplish the following:
 
 * Configure AKS via Azure CLI
-* Deploy a Managed Kubernetes cluster with a multi-tier Open Source app
+* Deploy a Managed Kubernetes cluster
+* Configure persistent volume on AKS 
+* Deploy a multi-tier Open Source app
 * Validate access to the Application
 
 The multi-tier app is based on MEAN stack + Kubernetes + Azure! Additional information about the app can be obtained the "app" folder from the same git repository.
