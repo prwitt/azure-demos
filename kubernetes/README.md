@@ -9,7 +9,7 @@ In this tutorial, you will learn how to deploy a Kubernetes Cluster utilizing Az
 * Deploy a multi-tier Open Source app
 * Validate access to the Application
 
-The multi-tier app is based on MEAN stack. Additional information about it can be obtained in the "app" folder from the same git repository. This is how the app looks like:
+The multi-tier app is based on [MEAN stack](http://mean.io/). Additional information about it can be obtained in the "app" folder from the same git repository. This is how the app looks like:
 
 
 ![topology](media/mean-k8s-az.png)
