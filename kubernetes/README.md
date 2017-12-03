@@ -17,7 +17,7 @@ The multi-tier app is based on MEAN stack. Additional information about it can b
 ## Before you begin
 
 * Make sure you have access to an [Azure Account](https://azure.microsoft.com/en-us/free/).
-* The tutorial is wholly based on [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell/) and the Azure Portal, avoiding additional software installation.
+* The tutorial is wholly based on [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell/) and the Azure Portal, and does not require additional software installation on the client side.
 
 ## Azure Kubernetes Service Configuration
 
