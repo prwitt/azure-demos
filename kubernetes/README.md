@@ -12,7 +12,7 @@ In this tutorial, you will learn how to deploy a Kubernetes Cluster utilizing Az
 The multi-tier app is based on MEAN stack. Additional information about it can be obtained in the "app" folder from the same git repository. This is how the app looks like:
 
 
-![topology](media/mean-kb-az.png)
+![topology](media/mean-k8s-az.png)
 
 ## Before you begin
 
