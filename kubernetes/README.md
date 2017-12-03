@@ -109,7 +109,7 @@ Note that at the time this tutorial was written, the default version for the AKS
 ``` console
 $ for i in `echo db-controller.yaml db-service.yaml pvc-azuredisk.yaml web-controller.yaml web-service.yaml`
 do
-wget https://raw.githubusercontent.com/prwitt/demos/master/kubernetes/$i
+wget https://raw.githubusercontent.com/prwitt/azure-demos/master/kubernetes/$i
 done
 ```
 
