@@ -1,7 +1,7 @@
 
 # Azure Kubernetes Services (AKS) Demo
 
-In this tutorial, you will learn how to deploy a Kubernetes Cluster utilizing Azure Kubernetes Services (AKS). The followin steps will help you to accomplish the following:
+In this tutorial, you will learn how to deploy a Kubernetes Cluster utilizing Azure Kubernetes Services (AKS). The following steps will help you to accomplish the following:
 
 * Configure AKS via Azure CLI
 * Deploy a Managed Kubernetes cluster
@@ -9,7 +9,7 @@ In this tutorial, you will learn how to deploy a Kubernetes Cluster utilizing Az
 * Deploy a multi-tier Open Source app
 * Validate access to the Application
 
-The multi-tier app is based on [MEAN stack](http://mean.io/). Additional information about it can be obtained in the "app" folder from the same git repository. This is how the app looks like:
+The multi-tier app is based on the [MEAN stack](http://mean.io/). Additional information about it can be obtained in the "app" folder from the same git repository. The following diagram shows how the app looks like:
 
 
 ![topology](media/mean-k8s-az.png)
@@ -17,7 +17,7 @@ The multi-tier app is based on [MEAN stack](http://mean.io/). Additional informa
 ## Before you begin
 
 * Make sure you have access to an [Azure Account](https://azure.microsoft.com/en-us/free/).
-* The tutorial is wholly based on [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell/) and the Azure Portal, and does not require additional software installation on the client side.
+* The tutorial is wholly based on [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell/) and the Azure Portal and does not require additional software installation on the client side.
 
 ## Azure Kubernetes Services Configuration
 
@@ -45,7 +45,7 @@ Output:
 }
 ```
 
-* Deploy a Managed Kubernetes Cluster on [AKS](https://azure.microsoft.com/en-us/services/container-service/). This process will take 5 minutes approximatelly.
+* Deploy a Managed Kubernetes Cluster on [AKS](https://azure.microsoft.com/en-us/services/container-service/). This process will take 5 minutes approximately.
 
 ```console
 $ az aks create --resource-group myK8sRG --name myK8sCluster --node-count 1 --generate-ssh-keys
@@ -311,7 +311,7 @@ In the example above, our App Public IP Address is: 1.1.1.1
 In the example above, the IP Address is: 1.1.1.1
 
 
-If all the steps above were performend successfully, we should get a web application with access to a MongoDB, where you can insert/delete Employee information, as follow:
+If all the steps above were performed successfully, we should get a web application with access to a MongoDB, where you can insert/delete Employee information, as follow:
 
 ![app-page](media/app-page.png)
 
