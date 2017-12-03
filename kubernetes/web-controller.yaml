@@ -1,0 +1,20 @@
+# web-controller.yaml
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: web
+  name: web-controller
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: web
+    spec:
+      containers:
+      - image: prenato/myjsapp
+        name: web
+        ports:
+        - containerPort: 3000
+          name: http-server
