@@ -19,7 +19,7 @@ The multi-tier app is based on MEAN stack. Additional information about it can b
 * Make sure you have access to an [Azure Account](https://azure.microsoft.com/en-us/free/).
 * The tutorial is wholly based on [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell/) and the Azure Portal, and does not require additional software installation on the client side.
 
-## Azure Kubernetes Service Configuration
+## Azure Kubernetes Services Configuration
 
 From Azure Cloud Shell on Azure Portal, perform the following steps:
 
@@ -311,7 +311,10 @@ In the example above, our App Public IP Address is: 1.1.1.1
 In the example above, the IP Address is: 1.1.1.1
 
 
-The application...
+If all the steps above were performend successfully, we should get a web application with access to a MongoDB, where you can insert/delete Employee information, as follow:
+
+![app-page](media/app-page.png)
+
 
 ## Clean Up
 
@@ -321,4 +324,4 @@ To delete the resources that were created, you can run the following command:
 az group delete --name myK8sRG
 ```
 
-For questions about this tutorial, you can reach out to parena@microsoft.com
+For questions or suggestions about this tutorial, you can reach out to parena@microsoft.com
