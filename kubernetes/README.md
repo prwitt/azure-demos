@@ -321,7 +321,7 @@ If all the steps above were performend successfully, we should get a web applica
 To delete the resources that were created, you can run the following command:
 
 ```console
-az group delete --name myK8sRG
+$ az group delete --name myK8sRG
 ```
 
 For questions or suggestions about this tutorial, you can reach out to parena@microsoft.com
