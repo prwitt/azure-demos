@@ -25,4 +25,4 @@ spec:
       volumes:
         - name: mongo-persistent-storage
           persistentVolumeClaim:
-                  claimName: pvc-azurefile
+                  claimName: pvc-azuredisk

@@ -9,7 +9,7 @@ In this tutorial, you will learn how to deploy a Kubernetes Cluster utilizing Az
 * Deploy a multi-tier Open Source app
 * Validate access to the Application
 
-The multi-tier app is based on the [MEAN stack](http://mean.io/). Additional information about it can be obtained in the "app" folder from the same git repository. The following diagram shows how the app looks like:
+The multi-tier app is based on the [MEAN stack](http://mean.io/). Additional information about it can be obtained in the ["app"](https://github.com/prwitt/azure-demos/tree/master/kubernetes/app) folder from the same git repository. The following diagram shows how the app looks like:
 
 
 ![topology](media/mean-k8s-az.png)
@@ -25,17 +25,17 @@ From Azure Cloud Shell on Azure Portal, perform the following steps:
 
 ![AzureCloudShell](media/azurecloudshell.png)
 
-* Create a [Resource Group](https://azure.microsoft.com/en-us/updates/resource-groups-in-azure-preview-portal/). Make sure you deploy it in a supported region for the Azure resource type 'Microsoft.ContainerService/managedClusters' - at the moment we wrote this tutorial, only Azure regions eastus/westeurope/centralus/westus are supported.
+* Create a [Resource Group](https://azure.microsoft.com/en-us/updates/resource-groups-in-azure-preview-portal/). Make sure you deploy it in a supported region for the Azure resource type 'Microsoft.ContainerService/managedClusters' - at the moment we wrote this tutorial, only Azure regions eastus/westeurope/centralus are supported.
 
 ```console
-$ az group create --name myK8sRG --location westus2
+$ az group create --name myK8sRG --location eastus
 ```
 
 Output:
 ```console
 {
   "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myK8sRG",
-  "location": "westus2",
+  "location": "eastus",
   "managedBy": null,
   "name": "myK8sRG",
   "properties": {
@@ -55,7 +55,7 @@ Output:
 ```console
 {
   "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourcegroups/myK8sRG/providers/Microsoft.ContainerService/managedClusters/myK8sCluster",
-  "location": "westus2",
+  "location": "eastus",
   "name": "myK8sCluster",
   "properties": {
     "accessProfiles": {
@@ -140,7 +140,7 @@ persistentvolumeclaim "pvc-azuredisk" created
 Let's see the private volume creation status:
 
 ```console
-$ kubectl get pvc
+$ kubectl describe pvc
 ```
 
 Output:
