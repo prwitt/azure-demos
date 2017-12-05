@@ -140,7 +140,7 @@ persistentvolumeclaim "pvc-azuredisk" created
 Let's see the private volume creation status:
 
 ```console
-$ kubectl describe pvc
+$ watch kubectl describe pvc
 ```
 
 Output:
@@ -163,6 +163,8 @@ Events:
   Normal  ProvisioningSucceeded  20s   persistentvolume-controller  Successfully provisioned volume pvc-b5939d88-d80a-11e7-851c-0a58ac1f0520 using kubernetes.io/azu
 re-disk
 ```
+
+**Note:** Wait until the PVC creation is successfull before moving to the next step.
 
 Now, let's create the Replication controller that will run the database. The Replication Controller will ensure to restart the DB automatically if needed.
 
@@ -324,4 +326,4 @@ To delete the resources that were created, you can run the following command:
 $ az group delete --name myK8sRG
 ```
 
-For questions or suggestions about this tutorial, you can reach out to parena@microsoft.com
+For questions or suggestions about this tutorial, you can reach out to [Paulo Renato](https://www.linkedin.com/in/paulorenato/).
