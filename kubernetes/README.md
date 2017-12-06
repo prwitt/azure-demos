@@ -236,7 +236,7 @@ replicationcontroller "web-controller" created
 
 **Note:** The Web Replication Controller utilizes a docker image called prenato/myjsapp that is available in my public repository on [Docker Hub](https://hub.docker.com/r/prenato/myjsapp/).
 
-* And finnaly, the Web Service that will expose external access to the web service:
+* And finally, the Web Service that will expose external access to the web service:
 
 ``` console
 From the directory where you have the file web-service.yaml:
