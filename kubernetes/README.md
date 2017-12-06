@@ -333,5 +333,5 @@ For questions or suggestions about this tutorial, you can reach out to [Paulo Re
 
 If you finished this lab and want to play more with Containers on Azure, I recommend for you to try out the following labs:
 
-[ACI Demo](https://github.com/rbitia/aci-demos)
-[Jenkins Integration with Azure Container Service and Kubernetes](https://docs.microsoft.com/en-us/azure/container-service/kubernetes/container-service-kubernetes-jenkins)
+* [ACI Demo](https://github.com/rbitia/aci-demos)
+* [Jenkins Integration with Azure Container Service and Kubernetes](https://docs.microsoft.com/en-us/azure/container-service/kubernetes/container-service-kubernetes-jenkins)
