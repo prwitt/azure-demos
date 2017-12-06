@@ -28,14 +28,14 @@ From Azure Cloud Shell on Azure Portal, perform the following steps:
 * Create a [Resource Group](https://azure.microsoft.com/en-us/updates/resource-groups-in-azure-preview-portal/). Make sure you deploy it in a supported region for the Azure resource type 'Microsoft.ContainerService/managedClusters' - at the moment we wrote this tutorial, only Azure regions eastus/westeurope/centralus are supported.
 
 ```console
-$ az group create --name myK8sRG --location eastus
+$ az group create --name myK8sRG --location centralus
 ```
 
 Output:
 ```console
 {
   "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myK8sRG",
-  "location": "eastus",
+  "location": "centralus",
   "managedBy": null,
   "name": "myK8sRG",
   "properties": {
@@ -55,7 +55,7 @@ Output:
 ```console
 {
   "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourcegroups/myK8sRG/providers/Microsoft.ContainerService/managedClusters/myK8sCluster",
-  "location": "eastus",
+  "location": "centralus",
   "name": "myK8sCluster",
   "properties": {
     "accessProfiles": {
@@ -327,3 +327,11 @@ $ az group delete --name myK8sRG
 ```
 
 For questions or suggestions about this tutorial, you can reach out to [Paulo Renato](https://www.linkedin.com/in/paulorenato/).
+
+
+## Bonus Labs
+
+If you finished this lab and want to play more with Containers on Azure, I recommend for you to try out the following labs:
+
+[ACI Demo](https://github.com/rbitia/aci-demos)
+[Jenkins Integration with Azure Container Service and Kubernetes](https://docs.microsoft.com/en-us/azure/container-service/kubernetes/container-service-kubernetes-jenkins)
