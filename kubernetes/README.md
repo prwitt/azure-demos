@@ -31,8 +31,6 @@ From Azure Cloud Shell on Azure Portal, perform the following steps:
 $ az group create --name myK8sRG --location centralus
 ```
 
-**Note:** The example above creates a resource group in Central US. As of May/2019, AKS is available on the following regions: East US (eastus), West Europe (westeurope), Central US (centralus), Canada Central (canadacentral), Canada East (canadaeast). Other regions will be available during GA.
-
 Output:
 ```console
 {
@@ -46,6 +44,8 @@ Output:
   "tags": null
 }
 ```
+
+**Note:** The example above creates a resource group in Central US. As of mid May/2018, AKS is available on the following regions: East US (eastus), West Europe (westeurope), Central US (centralus), Canada Central (canadacentral), Canada East (canadaeast). Other regions will be available during GA.
 
 * Before creating the AKS Cluster on the Resource Group created on the previous step, in case it is the first time you use this service on your Azure Subscription, you need to make sure the [Resource Provider](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-supported-services) is registered. The following command shows the status of your resource provider:
 
