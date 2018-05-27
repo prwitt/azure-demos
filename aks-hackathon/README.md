@@ -46,12 +46,14 @@ Output:
 
 ```console
 az provider show --name "Microsoft.ContainerService" --query "{registrationState:registrationState}"
+
+az provider show --name "Microsoft.Compute" --query "{registrationState:registrationState}"
 ```
 
-Output in case it is registered:
+Output in case it is not registered:
 ```console
 {
-  "registrationState": "Registered"
+  "registrationState": "NotRegistered"
 }
 ```
 
@@ -59,9 +61,11 @@ In case it is ot registered, the "registrationState" object will show as "NotReg
 
 ```console
 az provider register --namespace Microsoft.ContainerService --wait
+
+az provider register --namespace Microsoft.Computer --wait
 ```
 
-Repeat the command to verify the registration status, and if it shows as "Registered", we are good to proceed.
+Repeat the commands to verify the registration status, and if it shows as "Registered", we are good to proceed.
 
 
 * Deploy a Managed Kubernetes Cluster on [AKS](https://azure.microsoft.com/en-us/services/container-service/). This process will take 5 minutes approximately.
