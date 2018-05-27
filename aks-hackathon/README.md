@@ -42,7 +42,7 @@ Output:
 
 **Note:** The example above creates a resource group in Central US. As of mid May/2018, AKS is available on the following regions: East US (eastus), West Europe (westeurope), Central US (centralus), Canada Central (canadacentral), Canada East (canadaeast). Other regions will be available during GA.
 
-* Before creating the AKS Cluster on the Resource Group created on the previous step, in case it is the first time you use this service on your Azure Subscription, you need to make sure the [Resource Provider](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-supported-services) is registered. The following command shows the status of your resource provider:
+* Before creating the AKS Cluster on the Resource Group created on the previous step, in case it is the first time you use this service on your Azure Subscription, you need to make sure the [Resource Providers](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-manager-supported-services) you need are registered. The following commands show the status of your resource providers for "Container Services" and "Compute":
 
 ```console
 az provider show --name "Microsoft.ContainerService" --query "{registrationState:registrationState}"
@@ -57,7 +57,7 @@ Output in case it is not registered:
 }
 ```
 
-In case it is ot registered, the "registrationState" object will show as "NotRegistered", and you should register it with the following command before proceeding:
+To register the providers showing as "NotRegistered", you should run the following commands:
 
 ```console
 az provider register --namespace Microsoft.ContainerService --wait
