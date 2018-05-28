@@ -142,8 +142,119 @@ Note that at the time this tutorial was written, the default version for the AKS
 
 ## Nirmata Configuration
 
-## Manage Multi-tier App
+Register for Nirmata at:
 
+  https://try.nirmata.io
+
+If you already have a Nirmata account, you can  [log in](https://www.nirmata.io) or  [reset your credentials](https://www.nirmata.io/security/reset.html).
+
+Once you are logged in to Nirmata, you will see the getting started wizard. You can skip this wizard
+as we don't want to setup a new cluster and will discover the AKS cluster:
+
+![NirmataQuickStart](media/nirmata-quickstart-skip.png)
+
+Next, select "Clusters" on the left navigation bar and then select "Add Cluster" on the top right. Then select the first option to discover and manage an existing Kubernetes Cluster:
+
+![NirmataDiscoverCluster](media/nirmata-discover-cluster.png)
+
+You can then enter a name for your cluster, click on "Create Cluster and Discover Kubernetes Components":
+
+![NirmataDiscoverCluster2](media/nirmata-discover-cluster-2.png)
+
+On the next screen select the option to download the YAML declaration that installs the Nirmata
+Kubernetes Controller on your cluster. 
+
+![NirmataDownloadYAML](media/nirmata-download-yaml.png)
+
+You can copy & paste this YAML to a file in your Azure Cloud Shell. 
+
+  <pre>
+  nano nirmata.yml
+  </pre>
+
+Then use 'kubectl' to apply the YAML to your AKS cluster as follows::
+
+  <pre>
+  kubectl create -f nirmata.yml
+  </pre>
+
+![NirmataKubeController](media/nirmata-kube-controller.png)
+
+You can verify that the Nirmata resources are created using the following command:
+
+  <pre>
+  kubectl -n nirmata get pods
+  </pre>
+
+Once the Nirmata Kubernetes Controller is running, you can go back to Nirmata and view your cluster resources:
+
+![NirmataAKSCluster](media/nirmata-aks-cluster.png)
+
+## Manage Kubernetes Applications
+
+Next, we will manage Kubernetes applications and workloads in Nirmata. 
+
+
+### Create an Environment
+
+The first step is to create an Environment. In Nirmata, a Kubernetes Cluster can be shared by 
+multiple Enviroments. You can create Environments for each phase in your delivery pipeline (e.g.
+dev-test, staging, production) or other usage. You can then assign policies and configuration to
+Environments. 
+
+Check the [Nirmata Documetation](https://docs.nirmata.io/en/latest/Introduction.html#core-concepts) for details on Environments.
+
+To create an Environment, select 'Environments' from the left navigation panel and then 
+click on "Add Environment" at the top right:
+
+![NirmataAddEnvironment](media/nirmata-add-environment.png)
+
+Once you have created an Environment you can now deploy and manage Kubernetes applications in it. Nex, let's create an Application.
+
+### Create a Kubernetes Application
+
+Save the following YAML file on your local file system as ghost.yml:
+
+  <pre>
+  kind: Pod
+  apiVersion: v1
+  metadata:
+    name: ghost
+  spec:
+    containers:
+    - name: ghost
+      image: "ghost:1.9.1-alpine"
+      ports:
+      - containerPort: 2368
+        protocol: "TCP"
+  </pre>
+
+In Nirmata, select **Catalog - Applications** in the left navigation bar and then click **Add Application** in the top right. Then click on **Import YAMLs** and select the ghost.yml file from above.
+
+![NirmataCreateGhost](media/nirmata-create-ghost.png)
+
+Click **Create** to create the application. You can then click **Run this application in an environment** and
+enter a run name for your application. If you have multiple environments, you can also select the environment.
+
+Click **Run Application** to start deploying the ghost application to your Kubernetes environment:
+
+![NirmataCreateGhost](media/nirmata-run-ghost.png)
+
+You can then manage the running application from Nirmata, for example scale-up or scale-down instances or update the image version.
+
+### Import a Helm Chart
+
+You can also import Applications from Helm Charts.
+
+Select **Catalog** on the left navigation pane. Then select **Helm Charts** and click on the **Kubernetes Charts** repository. This will show you all available charts in the Kubernetes repository:
+
+![NirmataHelmCharts](media/nirmata-helm-charts.png)
+
+Next search for the "Redis" chart and click "Import". You can then view / customize the imported application.
+
+![NirmataRedisApplication](media/nirmata-run-redis.png)
+
+To run the application, select **Run the application in an Environment** and enter in a run name. This will create a new running application in your environment.
 
 ## Clean Up
 
