@@ -62,7 +62,7 @@ In case it is ot registered, the "registrationState" object will show as "NotReg
 ```console
 az provider register --namespace Microsoft.ContainerService --wait
 
-az provider register --namespace Microsoft.Computer --wait
+az provider register --namespace Microsoft.Compute --wait
 ```
 
 Repeat the commands to verify the registration status, and if it shows as "Registered", we are good to proceed.
