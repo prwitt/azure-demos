@@ -18,27 +18,148 @@ In this tutorial, we have a series of mini labs related to different Azure secur
 
 ## Lab 2: Identity & Access Management
 
-* Create Azure VM
-* Enable AAD MSI for the VM
-* Grant permission to read Azure Resource Manager (as Reader)
-* Learn how to use MSI on a VM to talk to ARM
+From Azure Cloud Shell on [Azure Portal](https://portal.azure.com), perform the following steps:
 
-1. Request Access Token:
+![AzureCloudShell](media/azurecloudshell.png)
+
+* Create a [Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
+
+```console
+$ az group create --name myVMRG --location eastus2
+```
+
+Output:
+```console
+{
+  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myVMRG",
+  "location": "eastus2",
+  "managedBy": null,
+  "name": "myVMRG",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null
+}
+```
+
+* Create a Virtual Machine on the resource group that was created in the previous steps
+
+```console
+az vm create \
+  --resource-group myVMRG \
+  --name myMSIVM1 \
+  --image UbuntuLTS \
+  --admin-username azureuser \
+  --generate-ssh-keys
+```
+
+**Note:** The command --generate-ssh-keys will use the existing SSH files ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub. In case these files do not exist, they will be created as part of this command execution.
+
+Output:
+
+```console
+{
+  "fqdns": "",
+  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myVMRG/providers/Microsoft.Compute/virtualMachines/myMSIVM1",
+  "location": "eastus2",
+  "macAddress": "AA-BB-CC-DD-EE-FF",
+  "powerState": "VM running",
+  "privateIpAddress": "10.0.0.4",
+  "publicIpAddress": "1.1.1.1",
+  "resourceGroup": "myVMRG",
+  "zones": ""
+}
+```
+**Note:** We will use the publicIpAddress from the output above in order to login into the VM.
+
+
+* Grant permission to read your Azure Resource Group
+
+Use az vm identity assign with the identity assign command enable the system-assigned identity to an existing VM:
+
+```console
+az vm identity assign --resource-group myVMRG --name myMSIVM1
+```
+
+Output:
+
+```console
+{
+  "systemAssignedIdentity": "aa5a8fa2-4e31-4bc7-99ea-4af10269d783",
+  "userAssignedIdentities": {}
+}
+```
+
+**Note:** The UUID aa5a8fa2-4e31-4bc7-99ea-4af10269d783 is an example and you may use your information.
+
+List the VM MSI Identity (principalId) that will be used to assign a role to the VM, which should match the "systemAssignedIdentity" from the previous output:
+
+```console
+az resource list -n myMSIVM1 --query [*].identity.principalId -o json | jq .[0] -r
+```
+
+Assign "Reader" role to the VM for the resource group scope:
+
+```console
+az role assignment create --assignee aa5a8fa2-4e31-4bc7-99ea-4af10269d783 --role reader --scope /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myVMRG
+```
+
+**Note:** We are using system-assigned identity in this example. Be sure to review the [difference between a system-assigned and user-assigned managed identity](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview#how-does-it-work).
+
+* Go through the following steps in order to validate MSI
+
+**Note:** You will need your Azure Subscription ID for the 4th step in this section. To get the subscription ID, run the command "az account list" from the Cloud Shell prompt.
+
+1. Login into the VM using the "publicIpAddress" information from the output after the VM creation
+
+```console
+ssh azureuser@1.1.1.1
+```
+
+2. Request Access Token:
 
 ```console 
 response=$(curl -H Metadata:true "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fmanagement.azure.com/")
 ```
-2. Parse Access Token Value:
+
+3. Parse Access Token Value:
 
 ```console 
 access_token=$(echo $response | python -c 'import sys, json; print (json.load(sys.stdin)["access_token"])') 
 ```
-3. Use the Token:
+
+4. Use the Token:
 
 ```console
-url="https://management.azure.com/subscriptions/1ad652b3-4cc2-40fd-991d-2d2a6910d22b/resourceGroups/tmpMS_MSItest?api-version=2016-09-01"curl $url -H "x-ms-version: 2017-11-09" -H "Authorization: Bearer $access_token"
+SubID="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+RG="myVMRG"
+
+url="https://management.azure.com/subscriptions/$SubID/resourceGroups/$RG?api-version=2016-09-01"
+
+curl $url -H "x-ms-version: 2017-11-09" -H "Authorization: Bearer $access_token"
 ```
 
+Output:
+```console
+{"id":"/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myVMRG","name":"myVMRG","location":"eastus2","properties":{"provisioningState":"Succeeded"}}
+```
+
+**Note:** In case you want to validate how MSI works, you can remove the role previously assigned and run the tests again.
+
+```console
+az role assignment delete --assignee XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX --role reader --scope /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myVMRG
+```
+
+Now, run the 4th step again (curl $url -H "x-ms-version: 2017-11-09" -H "Authorization: Bearer $access_token") from within the VM we configured, and you may notice an error message due to the access removal.
+
+
+* Lab resources cleanup:
+
+To delete the resources that were created as part of this lab, you can run the following command:
+
+```console
+$ az group delete --name myVMRG
+```
 
 ## Lab 3: Data Access Management
 
