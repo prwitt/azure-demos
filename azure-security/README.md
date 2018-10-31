@@ -9,6 +9,9 @@ In this tutorial, we have a series of mini labs related to different Azure secur
 * Unified Visibility Control
 * Operational Security Controls
 
+* auto-gen TOC:
+{:toc}
+
 ## Before you begin
 
 * Make sure you have access to an [Azure Account](https://azure.microsoft.com/en-us/free/).
@@ -22,7 +25,7 @@ From Azure Cloud Shell on [Azure Portal](https://portal.azure.com), perform the 
 
 ![AzureCloudShell](media/azurecloudshell.png)
 
-* Create a [Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
+### Create a [Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
 
 ```console
 $ az group create --name myVMRG --location eastus2
@@ -42,7 +45,7 @@ Output:
 }
 ```
 
-* Create a Virtual Machine on the resource group that was created in the previous steps
+### Create a Virtual Machine on the resource group that was created in the previous steps
 
 ```console
 az vm create \
@@ -53,7 +56,7 @@ az vm create \
   --generate-ssh-keys
 ```
 
-**Note:** The command --generate-ssh-keys will use the existing SSH files ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub. In case these files do not exist, they will be created as part of this command execution.
+**Note:** The command "--generate-ssh-keys" will use the existing SSH files ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub. In case these files do not exist, they will be created as part of the "az vm create" command execution.
 
 Output:
 
@@ -73,7 +76,7 @@ Output:
 **Note:** We will use the publicIpAddress from the output above in order to login into the VM.
 
 
-* Grant permission to read your Azure Resource Group
+### Grant permission to read your Azure Resource Group
 
 Use az vm identity assign with the identity assign command enable the system-assigned identity to an existing VM:
 
@@ -106,7 +109,7 @@ az role assignment create --assignee aa5a8fa2-4e31-4bc7-99ea-4af10269d783 --role
 
 **Note:** We are using system-assigned identity in this example. Be sure to review the [difference between a system-assigned and user-assigned managed identity](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview#how-does-it-work).
 
-* Go through the following steps in order to validate MSI
+### Go through the following steps in order to validate MSI
 
 **Note:** You will need your Azure Subscription ID for the 4th step in this section. To get the subscription ID, run the command "az account list" from the Cloud Shell prompt.
 
@@ -153,7 +156,7 @@ az role assignment delete --assignee XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX --role
 Now, run the 4th step again (curl $url -H "x-ms-version: 2017-11-09" -H "Authorization: Bearer $access_token") from within the VM we configured, and you may notice an error message due to the access removal.
 
 
-* Lab resources cleanup:
+### Lab resources cleanup:
 
 To delete the resources that were created as part of this lab, you can run the following command:
 
