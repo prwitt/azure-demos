@@ -1,6 +1,6 @@
 # Azure Security Labs
 
-In this lab tutorial, we have a series of mini labs related to different Azure security topics that are discussed as part of the "Azure Security Overview" session delivered by [Paulo Renato](https://www.linkedin.com/in/paulorenato/). The presentation can be obtained upon contact. The areas we chose for this tutorial are described as follow: 
+In this tutorial, we have a series of mini labs related to different Azure security topics that are discussed as part of the "Azure Security Overview" session delivered by [Paulo Renato](https://www.linkedin.com/in/paulorenato/). The presentation can be obtained upon contact. The areas we chose for this tutorial are described as follow: 
 
 * [Azure Networking](#azure-networking)
 * [Identity & Access Management](#identity-and-access)
@@ -47,7 +47,7 @@ Output:
 An application security group enables you to group servers with similar port filtering requirements.
 
 ```console
-az network asg create \
+$ az network asg create \
   --resource-group myLab1RG \
   --name myAsgWebServers \
   --location eastus2
@@ -70,7 +70,7 @@ Output:
 ```
 
 ```console
-az network asg create \
+$ az network asg create \
   --resource-group myLab1RG \
   --name myAsgMgmtServers \
   --location eastus2
@@ -95,7 +95,7 @@ Output:
 #### Create a network security group
 
 ```console
-az network nsg create \
+$ az network nsg create \
   --resource-group myLab1RG \
   --name myLab1Nsg
 ```
@@ -105,7 +105,7 @@ az network nsg create \
 The following example creates a rule that allows traffic inbound from the internet to the myWebServers application security group over ports 80 and 443:
 
 ```console
-az network nsg rule create \
+$ az network nsg rule create \
   --resource-group myLab1RG \
   --nsg-name myLab1Nsg \
   --name Allow-Web-All \
@@ -166,7 +166,7 @@ Output:
 The following example creates a rule that allows traffic inbound from the Internet to the myMgmtServers application security group over port 22:
 
 ```console
-az network nsg rule create \
+$ az network nsg rule create \
   --resource-group myLab1RG \
   --nsg-name myLab1Nsg \
   --name Allow-SSH-All \
@@ -227,7 +227,7 @@ az network nsg rule create \
 The following example creates a virtual named myLab1VNet:
 
 ```console
-az network vnet create \
+$ az network vnet create \
   --name myLab1VNet \
   --resource-group myLab1RG \
   --address-prefixes 192.168.0.0/16
@@ -269,7 +269,7 @@ Output:
 The following example adds a subnet named myLab1Subnet to the virtual network and associates the myLab1Nsg network security group to it:
 
 ```console
-az network vnet subnet create \
+$ az network vnet subnet create \
   --vnet-name myLab1VNet \
   --resource-group myLab1RG \
   --name myLab1Subnet \
@@ -376,7 +376,7 @@ Output:
 ```console
 {
   "fqdns": "",
-  "id": "/subscriptions/30ec953a-f038-4636-b9b6-4ff8ba87b572/resourceGroups/myLab1RG/providers/Microsoft.Compute/virtualMachines/myLab1VmMgmt",
+  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myLab1RG/providers/Microsoft.Compute/virtualMachines/myLab1VmMgmt",
   "location": "eastus2",
   "macAddress": "00-0D-3A-04-7B-5D",
   "powerState": "VM running",
@@ -431,7 +431,7 @@ sudo apt-get -y install nginx
 >**Note:** The myLab1VmWeb VM is allowed outbound to the Internet to retrieve nginx because a default security rule allows all outbound traffic to the Internet. Exit the myLab1VmWeb SSH session, which leaves you at the `azureuser@myLab1VmMgmt:~$` prompt of the `myLab1VmMgmt` VM. To retrieve the nginx welcome screen from the `myLab1VmWeb` VM, enter the following command:
 
 ```console
-curl myLab1VMWeb
+$ curl myLab1VMWeb
 ```
 
 Output:
@@ -471,16 +471,16 @@ From Azure Cloud Shell on [Azure Portal](https://portal.azure.com), perform the 
 #### Create a [Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
 
 ```console
-$ az group create --name myVMRG --location eastus2
+$ az group create --name myLab2RG --location eastus2
 ```
 
 Output:
 ```console
 {
-  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myVMRG",
+  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myLab2RG",
   "location": "eastus2",
   "managedBy": null,
-  "name": "myVMRG",
+  "name": "myLab2RG",
   "properties": {
     "provisioningState": "Succeeded"
   },
@@ -495,8 +495,8 @@ Output:
 
 ```console
 $ az vm create \
-  --resource-group myVMRG \
-  --name myMSIVM1 \
+  --resource-group myLab2RG \
+  --name myLab2VM1 \
   --image UbuntuLTS \
   --admin-username azureuser \
   --generate-ssh-keys
@@ -509,13 +509,13 @@ Output:
 ```console
 {
   "fqdns": "",
-  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myVMRG/providers/Microsoft.Compute/virtualMachines/myMSIVM1",
+  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myVMRG/providers/Microsoft.Compute/virtualMachines/myLab2VM1",
   "location": "eastus2",
   "macAddress": "AA-BB-CC-DD-EE-FF",
   "powerState": "VM running",
   "privateIpAddress": "10.0.0.4",
-  "publicIpAddress": "1.1.1.1",
-  "resourceGroup": "myVMRG",
+  "publicIpAddress": "40.70.131.116",
+  "resourceGroup": "myLab2RG",
   "zones": ""
 }
 ```
@@ -527,7 +527,7 @@ Output:
 Use az vm identity assign with the identity assign command enable the system-assigned identity to an existing VM:
 
 ```console
-$ az vm identity assign --resource-group myVMRG --name myMSIVM1
+$ az vm identity assign --resource-group myLab2RG --name myLab2VM1
 ```
 
 >**Note:** We could create the VM with its identity assigned by adding the parameter `--assign-identity`, as explained [here](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm#system-assigned-managed-identity).
@@ -546,13 +546,13 @@ Output:
 List the VM MSI Identity (`principalId`) that will be used to assign a role to the VM, which should match the `systemAssignedIdentity` from the previous output:
 
 ```console
-$ MSIdentity=`az resource list -n myMSIVM1 --query [*].identity.principalId -o json | jq .[0] -r`
+$ MSIdentity=`az resource list -n myLab2VM1 --query [*].identity.principalId -o json | jq .[0] -r`
 ```
 
-Assign "Reader" role to the VM for the resource group scope:
+Assign "Reader" role to the VM for the resource group scope. Make sure you replace `XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX` with your real subscription id.
 
 ```console
-$ az role assignment create --assignee $MSIdentity --role reader --scope /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myVMRG
+$ az role assignment create --assignee $MSIdentity --role reader --scope /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myLab2RG
 ```
 
 Output:
@@ -560,12 +560,12 @@ Output:
 ```console
 {
   "canDelegate": null,
-  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myVMRG/providers/Microsoft.Authorization/roleAssignments/aa5a8fa2-4e31-4bc7-99ea-4af10269d783",
+  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myLab2RG/providers/Microsoft.Authorization/roleAssignments/aa5a8fa2-4e31-4bc7-99ea-4af10269d783",
   "name": "fa0c59bb-08f7-4a20-a4b3-2186a7c6d358",
   "principalId": "aa5a8fa2-4e31-4bc7-99ea-4af10269d783",
-  "resourceGroup": "myVMRG",
+  "resourceGroup": "myLab2RG",
   "roleDefinitionId": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/roleDefinitions/acdd72a7-3385-48ef-bd42-f606fba81ae7",
-  "scope": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myVMRG",
+  "scope": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myLab2RG",
   "type": "Microsoft.Authorization/roleAssignments"
 }
 ```
@@ -578,7 +578,7 @@ Output:
 1. Login into the VM using the `publicIpAddress` information from the output after the VM creation
 
 ```console
-$ ssh azureuser@1.1.1.1
+$ ssh azureuser@40.70.131.116
 ```
 
 2. Request Access Token:
@@ -597,7 +597,7 @@ $ access_token=$(echo $response | python -c 'import sys, json; print (json.load(
 
 ```console
 $ SubID="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-$ RG="myVMRG"
+$ RG="myLab2RG"
 
 $ url="https://management.azure.com/subscriptions/$SubID/resourceGroups/$RG?api-version=2016-09-01"
 
@@ -606,13 +606,13 @@ $ curl $url -H "x-ms-version: 2017-11-09" -H "Authorization: Bearer $access_toke
 
 Output:
 ```console
-{"id":"/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myVMRG","name":"myVMRG","location":"eastus2","properties":{"provisioningState":"Succeeded"}}
+{"id":"/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myLab2RG","name":"myLab2RG","location":"eastus2","properties":{"provisioningState":"Succeeded"}}
 ```
 
 >**Note:** In case you want to validate how MSI works, you can remove the role previously assigned and run the tests again.
 
 ```console
-$ az role assignment delete --assignee XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX --role reader --scope /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myVMRG
+$ az role assignment delete --assignee XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX --role reader --scope /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myLab2RG
 ```
 
 Now, run the 4th step again (`curl $url -H "x-ms-version: 2017-11-09" -H "Authorization: Bearer $access_token"`) from within the VM we configured, and you may notice an error message due to the access removal.
@@ -620,7 +620,7 @@ Now, run the 4th step again (`curl $url -H "x-ms-version: 2017-11-09" -H "Author
 Output:
 
 ```console
-{"error":{"code":"AuthorizationFailed","message":"The client 'f4011a26-1eec-4083-a2c2-ce173dca00bc' with object id 'f4011a26-1eec-4083-a2c2-ce173dca00bc' does not have authorizationto perform action 'Microsoft.Resources/subscriptions/resourceGroups/read' over scope '/subscriptions/30ec953a-f038-4636-b9b6-4ff8ba87b572/resourceGroups/myVMRG'."}}
+{"error":{"code":"AuthorizationFailed","message":"The client 'f4011a26-1eec-4083-a2c2-ce173dca00bc' with object id 'f4011a26-1eec-4083-a2c2-ce173dca00bc' does not have authorizationto perform action 'Microsoft.Resources/subscriptions/resourceGroups/read' over scope '/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myLab2RG'."}}
 ```
 
 #### Lab resources cleanup:
@@ -628,10 +628,255 @@ Output:
 To delete the resources that were created as part of this lab, you can run the following command:
 
 ```console
-$ az group delete --name myVMRG
+$ az group delete --name myLab2RG
 ```
 
 ## <a name="data-access"></a>ab 3: Data Access Management
+
+This mini lab will focus on [Shared Access Signature](https://docs.microsoft.com/en-us/azure/storage/common/storage-dotnet-shared-access-signature-part-1).
+
+From Azure Cloud Shell on [Azure Portal](https://portal.azure.com), perform the following steps:
+
+![AzureCloudShell](media/azurecloudshell.png)
+
+#### Create a [Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
+
+```console
+$ az group create --name myLab3RG --location eastus2
+```
+
+Output:
+```console
+{
+  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myLab3RG",
+  "location": "eastus2",
+  "managedBy": null,
+  "name": "myLab3RG",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null
+}
+```
+
+#### Create Storage Account
+
+>**Important:** The Storage account name is global and unique, so you need to use a random name. In the following example we are using `mylab3stgacct`. Note that it accepts between 3-24 characters and all lower-case.
+
+```console
+$ az storage account create --name mylab3stgacct --resource-group myLab3RG --sku Standard_LRS --location eastus2
+```
+
+Output:
+
+```console
+{
+  "accessTier": null,
+  "creationTime": "2018-10-31T18:17:51.904889+00:00",
+  "customDomain": null,
+  "enableHttpsTrafficOnly": false,
+  "encryption": {
+    "keySource": "Microsoft.Storage",
+    "keyVaultProperties": null,
+    "services": {
+      "blob": {
+        "enabled": true,
+        "lastEnabledTime": "2018-10-31T18:17:52.108026+00:00"
+      },
+      "file": {
+        "enabled": true,
+        "lastEnabledTime": "2018-10-31T18:17:52.108026+00:00"
+      },
+      "queue": null,
+      "table": null
+    }
+  },
+  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myLab3RG/providers/Microsoft.Storage/storageAccounts/mylab3stgacct",
+  "identity": null,
+  "isHnsEnabled": null,
+  "kind": "Storage",
+  "lastGeoFailoverTime": null,
+  "location": "eastus2",
+  "name": "mylab3stgacct",
+  "networkRuleSet": {
+    "bypass": "AzureServices",
+    "defaultAction": "Allow",
+    "ipRules": [],
+    "virtualNetworkRules": []
+  },
+  "primaryEndpoints": {
+    "blob": "https://mylab3stgacct.blob.core.windows.net/",
+    "dfs": null,
+    "file": "https://mylab3stgacct.file.core.windows.net/",
+    "queue": "https://mylab3stgacct.queue.core.windows.net/",
+    "table": "https://mylab3stgacct.table.core.windows.net/",
+    "web": null
+  },
+  "primaryLocation": "eastus2",
+  "provisioningState": "Succeeded",
+  "resourceGroup": "myLab3RG",
+  "secondaryEndpoints": null,
+  "secondaryLocation": null,
+  "sku": {
+    "capabilities": null,
+    "kind": null,
+    "locations": null,
+    "name": "Standard_LRS",
+    "resourceType": null,
+    "restrictions": null,
+    "tier": "Standard"
+  },
+  "statusOfPrimary": "available",
+  "statusOfSecondary": null,
+  "tags": {},
+  "type": "Microsoft.Storage/storageAccounts"
+}
+```
+
+#### Create a storage container to store blobs
+
+```console
+$ az storage container create --name mylab3stgcontainer --account-name mylab3stgacct
+```
+
+Output:
+
+```console
+{
+  "created": true
+}
+```
+
+#### Create Stored Access Policy for the container
+
+First, let us see if there is any policy associated to the storage container recently created:
+
+```console
+$ az storage container policy list --container mylab3stgcontainer --account-name mylab3stgacct
+```
+
+Output:
+
+```console
+{}
+```
+
+As we could see, no stored policy is associated with the container created above. Now, let us create the `Stored Access Policy` for the container:
+
+```console
+$ start=`date -d "-30 minutes" '+%Y-%m-%dT%H:%MZ'`
+$ end=`date -d "30 minutes" '+%Y-%m-%dT%H:%MZ'`
+$ az storage container policy create --name mylab3policy1 --container-name mylab3stgcontainer --account-name mylab3stgacct --permissions dwrl --start $start --expiry $end
+```
+
+Output:
+
+```console
+{
+  "etag": "\"0x8D63F5F5F4222C3\"",
+  "lastModified": "2018-10-31T18:33:37+00:00"
+}
+```
+
+Execute the command below to liste the pol
+
+```console
+$ az storage container policy list --container mylab3stgcontainer --account-name mylab3stgacct
+```
+
+Output:
+
+```console
+{
+  "mylab3policy1": {
+    "expiry": null,
+    "permission": "rwdl",
+    "start": null
+  }
+}
+```
+
+#### Create a SAS key based on Stored Access Policy
+
+```console
+$ az storage container generate-sas --name mylab3stgcontainer --account-name mylab3stgacct --policy-name mylab3policy1
+```
+
+Output:
+
+```console
+"sv=2018-03-28&si=mylab3policy1&sr=c&sig=71zzMlgFsRhNiqiBirNlWNAN8zQVdv0Xi36Q2SKoKNo%3D"
+```
+
+#### Test Access to the Storage Container
+
+Upload a file to the storage account:
+
+```console
+$ sas="sv=2018-03-28&si=mylab3policy1&sr=c&sig=71zzMlgFsRhNiqiBirNlWNAN8zQVdv0Xi36Q2SKoKNo%3D"
+
+$ echo "MyLab3 Upload Test" > MyLab3File.txt
+
+$ az storage blob upload --name MyLab3File.txt --container-name mylab3stgcontainer --account-name mylab3stgacct --file MyLab3File.txt --sas-token $sas 
+```
+
+Validate you can access the blob as follow:
+
+```console
+$ curl "https://mylab3stgacct.blob.core.windows.net/mylab3stgcontainer/MyLab3File.txt?"$sas
+```
+
+>**Note:** As you append the SAS key value to the URL, it will look like this:  `https://storage account name and Azure URL/the container name/the filename?the sas-key value`.
+
+
+Update the `Stored Access Policy` expiring date and try to access it again, as follow:
+
+```console
+$ start=`date -d "-30 minutes" '+%Y-%m-%dT%H:%MZ'`
+$ end=`date -d "-30 minutes" '+%Y-%m-%dT%H:%MZ'`
+$ az storage container policy update --name mylab3policy1 --container-name mylab3stgcontainer --account-name mylab3stgacct --permissions dwrl --start $start --expiry $end
+```
+
+Output:
+
+```console
+{
+  "etag": "\"0x8D63F75B3FE941A\"",
+  "lastModified": "2018-10-31T21:13:28+00:00"
+}
+```
+
+If you try to access the same blob, you should get an error message, as follow:
+
+```console
+$ curl "https://mylab3stgacct.blob.core.windows.net/mylab3stgcontainer/MyLab3File.txt?"$sas
+```
+
+Output:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<Error>
+   <Code>AuthenticationFailed</Code>
+   <Message>Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.
+RequestId:4c9acbf6-601e-00b1-455e-714e6b000000
+Time:2018-10-31T21:14:09.2705135Z</Message>
+   <AuthenticationErrorDetail>Signed expiry time [Wed, 31 Oct 2018 20:43:00 GMT] has to be after signed start time [Wed, 31 Oct 2018 20:43:00 GMT]</AuthenticationErrorDetail>
+</Error>
+```
+
+>**Note:** If you update the `start` and `end` dates on the policy, the access can be restablished.
+
+
+#### Lab resources cleanup:
+
+To delete the resources that were created as part of this lab, you can run the following command:
+
+```console
+$ az group delete --name myLab3RG
+```
+
+
 
 ## <a name="governance"></a>Lab 4: Governance
 
