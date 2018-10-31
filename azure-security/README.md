@@ -1,8 +1,8 @@
 # Azure Security Labs
 
-In this tutorial, we have a series of mini labs related to different Azure security topics that are discussed as part of the "Azure Security Overview" session delivered by [Paulo Renato](https://www.linkedin.com/in/paulorenato/). The presentation can be obtained upon contact. The areas we chose for this tutorial are described as follow: 
+In this lab tutorial, we have a series of mini labs related to different Azure security topics that are discussed as part of the "Azure Security Overview" session delivered by [Paulo Renato](https://www.linkedin.com/in/paulorenato/). The presentation can be obtained upon contact. The areas we chose for this tutorial are described as follow: 
 
-* Azure Networking
+* [Azure Networking](#azure-networking)
 * Identity & Access Management
 * Data Access Management
 * Governance
@@ -14,7 +14,7 @@ In this tutorial, we have a series of mini labs related to different Azure secur
 * Make sure you have access to an [Azure Account](https://azure.microsoft.com/en-us/free/).
 * The tutorial is wholly based on [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell/) and the Azure Portal and does not require additional software installation on the client side.
 
-## Lab 1: Azure Networking
+## <a name="azure-networking"></a>Lab 1: Azure Networking
 
 ## Lab 2: Identity & Access Management
 
@@ -42,13 +42,13 @@ Output:
 }
 ```
 
-**Note:** You will need your Azure Subscription ID for some of the steps below. To get the subscription ID, run the command "az account list" from the Cloud Shell prompt.
+**Note:** You will need your Azure Subscription ID for some of the steps below. To get the subscription ID, run the command `az account list` from the Cloud Shell prompt.
 
 
 #### Create a Virtual Machine on the resource group that was created in the previous steps
 
 ```console
-az vm create \
+$ az vm create \
   --resource-group myVMRG \
   --name myMSIVM1 \
   --image UbuntuLTS \
@@ -56,7 +56,7 @@ az vm create \
   --generate-ssh-keys
 ```
 
-**Note:** The command "--generate-ssh-keys" will use the existing SSH files ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub. In case these files do not exist, they will be created as part of the "az vm create" command execution.
+**Note:** The command `--generate-ssh-keys` will use the existing SSH files `~/.ssh/id_rsa` and `~/.ssh/id_rsa.pub`. In case these files do not exist, they will be created as part of the `az vm create` command execution.
 
 Output:
 
@@ -81,10 +81,10 @@ Output:
 Use az vm identity assign with the identity assign command enable the system-assigned identity to an existing VM:
 
 ```console
-az vm identity assign --resource-group myVMRG --name myMSIVM1
+$ az vm identity assign --resource-group myVMRG --name myMSIVM1
 ```
 
-**Note:** We could create the VM with its identity assigned by adding the parameter "--assign-identity", as explained [here](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm#system-assigned-managed-identity).
+**Note:** We could create the VM with its identity assigned by adding the parameter `--assign-identity`, as explained [here](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/qs-configure-cli-windows-vm#system-assigned-managed-identity).
 
 Output:
 
@@ -95,18 +95,18 @@ Output:
 }
 ```
 
-**Note:** The UUID aa5a8fa2-4e31-4bc7-99ea-4af10269d783 is an example and you may use your information.
+**Note:** The UUID `aa5a8fa2-4e31-4bc7-99ea-4af10269d783` is an example and you may use your information.
 
-List the VM MSI Identity (principalId) that will be used to assign a role to the VM, which should match the "systemAssignedIdentity" from the previous output:
+List the VM MSI Identity (`principalId`) that will be used to assign a role to the VM, which should match the `systemAssignedIdentity` from the previous output:
 
 ```console
-MSIdentity=`az resource list -n myMSIVM1 --query [*].identity.principalId -o json | jq .[0] -r`
+$ MSIdentity=`az resource list -n myMSIVM1 --query [*].identity.principalId -o json | jq .[0] -r`
 ```
 
 Assign "Reader" role to the VM for the resource group scope:
 
 ```console
-az role assignment create --assignee $MSIdentity --role reader --scope /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myVMRG
+$ az role assignment create --assignee $MSIdentity --role reader --scope /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myVMRG
 ```
 
 Output:
@@ -129,33 +129,33 @@ Output:
 #### Go through the following steps in order to validate MSI
 
 
-1. Login into the VM using the "publicIpAddress" information from the output after the VM creation
+1. Login into the VM using the `publicIpAddress` information from the output after the VM creation
 
 ```console
-ssh azureuser@1.1.1.1
+$ ssh azureuser@1.1.1.1
 ```
 
 2. Request Access Token:
 
 ```console 
-response=$(curl -H Metadata:true "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fmanagement.azure.com/")
+$ response=$(curl -H Metadata:true "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fmanagement.azure.com/")
 ```
 
 3. Parse Access Token Value:
 
 ```console 
-access_token=$(echo $response | python -c 'import sys, json; print (json.load(sys.stdin)["access_token"])') 
+$ access_token=$(echo $response | python -c 'import sys, json; print (json.load(sys.stdin)["access_token"])') 
 ```
 
 4. Use the Token:
 
 ```console
-SubID="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-RG="myVMRG"
+$ SubID="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+$ RG="myVMRG"
 
-url="https://management.azure.com/subscriptions/$SubID/resourceGroups/$RG?api-version=2016-09-01"
+$ url="https://management.azure.com/subscriptions/$SubID/resourceGroups/$RG?api-version=2016-09-01"
 
-curl $url -H "x-ms-version: 2017-11-09" -H "Authorization: Bearer $access_token"
+$ curl $url -H "x-ms-version: 2017-11-09" -H "Authorization: Bearer $access_token"
 ```
 
 Output:
@@ -166,10 +166,10 @@ Output:
 **Note:** In case you want to validate how MSI works, you can remove the role previously assigned and run the tests again.
 
 ```console
-az role assignment delete --assignee XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX --role reader --scope /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myVMRG
+$ az role assignment delete --assignee XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX --role reader --scope /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myVMRG
 ```
 
-Now, run the 4th step again (curl $url -H "x-ms-version: 2017-11-09" -H "Authorization: Bearer $access_token") from within the VM we configured, and you may notice an error message due to the access removal.
+Now, run the 4th step again (`curl $url -H "x-ms-version: 2017-11-09" -H "Authorization: Bearer $access_token"`) from within the VM we configured, and you may notice an error message due to the access removal.
 
 Output:
 
