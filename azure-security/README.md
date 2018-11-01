@@ -1,4 +1,4 @@
-# Azure Security Labs
+# <a name="security-labs"><a/>Azure Security Labs
 
 In this tutorial, we have a series of mini labs related to different Azure security topics that are discussed as part of the "Azure Security Overview" session delivered by [Paulo Renato](https://www.linkedin.com/in/paulorenato/). The presentation can be obtained upon contact. The areas we chose for this tutorial are described as follow: 
 
@@ -7,7 +7,6 @@ In this tutorial, we have a series of mini labs related to different Azure secur
 * [Data Access Management](#data-access)
 * [Governance](#governance)
 * [Unified Visibility Control](#unified-control)
-* [Operational Security Controls](#operational-controls)
 
 ## Before you begin
 
@@ -24,7 +23,7 @@ From Azure Cloud Shell on [Azure Portal](https://portal.azure.com), perform the 
 
 #### Create a [Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
 
-```console
+```
 $ az group create --name myLab1RG --location eastus2
 ```
 
@@ -46,7 +45,7 @@ Output:
 
 An application security group enables you to group servers with similar port filtering requirements.
 
-```console
+```
 $ az network asg create \
   --resource-group myLab1RG \
   --name myAsgWebServers \
@@ -69,7 +68,7 @@ Output:
 }
 ```
 
-```console
+```
 $ az network asg create \
   --resource-group myLab1RG \
   --name myAsgMgmtServers \
@@ -94,7 +93,7 @@ Output:
 
 #### Create a network security group
 
-```console
+```
 $ az network nsg create \
   --resource-group myLab1RG \
   --name myLab1Nsg
@@ -104,7 +103,7 @@ $ az network nsg create \
 
 The following example creates a rule that allows traffic inbound from the internet to the `myWebServers` application security group over ports 80 and 443:
 
-```console
+```
 $ az network nsg rule create \
   --resource-group myLab1RG \
   --nsg-name myLab1Nsg \
@@ -165,7 +164,7 @@ Output:
 
 The following example creates a rule that allows traffic inbound from the Internet to the `myMgmtServers` application security group over port 22:
 
-```console
+```
 $ az network nsg rule create \
   --resource-group myLab1RG \
   --nsg-name myLab1Nsg \
@@ -226,7 +225,7 @@ $ az network nsg rule create \
 
 The following example creates a virtual named `myLab1VNet`:
 
-```console
+```
 $ az network vnet create \
   --name myLab1VNet \
   --resource-group myLab1RG \
@@ -268,7 +267,7 @@ Output:
 
 The following example adds a subnet named myLab1Subnet to the virtual network and associates the `myLab1Nsg` network security group to it:
 
-```console
+```
 $ az network vnet subnet create \
   --vnet-name myLab1VNet \
   --resource-group myLab1RG \
@@ -323,7 +322,7 @@ The following example creates a VM that will serve as a web server. The `--asgs 
 
 The `--nsg ""` option is specified to prevent Azure from creating a default network security group for the network interface Azure creates when it creates the VM. To streamline this article, a password is used.
 
-```console
+```
 $ az vm create \
   --resource-group myLab1RG \
   --name myLab1VmWeb \
@@ -358,7 +357,7 @@ Output:
 
 Create a VM to serve as a management server:
 
-```console
+```
 $ az vm create \
   --resource-group myLab1RG \
   --name myLab1VmMgmt \
@@ -391,7 +390,7 @@ Output:
 
 Copy the your SSH keys to the `myLab1VmMgmt` VM as it will be used for you to login into the `myLab1VmWeb` VM later:
 
-```console
+```
 $ scp ~/.ssh/id_rsa* azureuser@40.70.204.109:~/.ssh/
 ```
 
@@ -404,7 +403,7 @@ id_rsa.pub                                         100%  380     0.4KB/s   00:00
 
 Use the command that follows to create an SSH session with the `myLab1VmMgmt` VM. Replace with the public IP address of your VM. In the example above, the IP address is 40.70.204.109.
 
-```console
+```
 $ ssh azureuser@40.70.204.109
 ```
 
@@ -412,7 +411,7 @@ $ ssh azureuser@40.70.204.109
 
 Use the following command to SSH to the myLab1VmWeb VM from the `myLab1VmMgmt` VM:
 
-```console
+```
 $ ssh azureuser@MyLab1VmWeb
 ```
 
@@ -420,7 +419,7 @@ $ ssh azureuser@MyLab1VmWeb
 
 Use the following commands to install the nginx web server on the myVmWeb VM:
 
-```console
+```
 # Update package source
 sudo apt-get -y update
 
@@ -430,7 +429,7 @@ sudo apt-get -y install nginx
 
 >**Note:** The `myLab1VmWeb` VM is allowed outbound to the Internet to retrieve nginx because a default security rule allows all outbound traffic to the Internet. Exit the myLab1VmWeb SSH session, which leaves you at the `azureuser@myLab1VmMgmt:~$` prompt of the `myLab1VmMgmt` VM. To retrieve the nginx welcome screen from the `myLab1VmWeb` VM, enter the following command:
 
-```console
+```
 $ curl myLab1VMWeb
 ```
 
@@ -456,9 +455,11 @@ Logout of the `myLab1VmMgmt` VM. To confirm that you can access the `myLab1VmWeb
 
 To delete the resources that were created as part of this lab, you can run the following command:
 
-```console
+```
 $ az group delete --name myLab1RG
 ```
+
+[Return to Table of Contents](#security-labs)
 
 # <a name="identity-and-access"></a>Lab 2: Identity & Access Management
 
@@ -470,7 +471,7 @@ From Azure Cloud Shell on [Azure Portal](https://portal.azure.com), perform the 
 
 #### Create a [Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
 
-```console
+```
 $ az group create --name myLab2RG --location eastus2
 ```
 
@@ -493,7 +494,7 @@ Output:
 
 #### Create a Virtual Machine on the resource group that was created in the previous steps
 
-```console
+```
 $ az vm create \
   --resource-group myLab2RG \
   --name myLab2VM1 \
@@ -526,7 +527,7 @@ Output:
 
 Use az vm identity assign with the identity assign command enable the system-assigned identity to an existing VM:
 
-```console
+```
 $ az vm identity assign --resource-group myLab2RG --name myLab2VM1
 ```
 
@@ -545,13 +546,13 @@ Output:
 
 List the VM MSI Identity (`principalId`) that will be used to assign a role to the VM, which should match the `systemAssignedIdentity` from the previous output:
 
-```console
+```
 $ MSIdentity=`az resource list -n myLab2VM1 --query [*].identity.principalId -o json | jq .[0] -r`
 ```
 
 Assign "Reader" role to the VM for the resource group scope. Make sure you replace `XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX` with your real subscription id.
 
-```console
+```
 $ az role assignment create --assignee $MSIdentity --role reader --scope /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myLab2RG
 ```
 
@@ -577,25 +578,25 @@ Output:
 
 1. Login into the VM using the `publicIpAddress` information from the output after the VM creation
 
-```console
+```
 $ ssh azureuser@40.70.131.116
 ```
 
 2. Request Access Token:
 
-```console 
+``` 
 $ response=$(curl -H Metadata:true "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fmanagement.azure.com/")
 ```
 
 3. Parse Access Token Value:
 
-```console 
+``` 
 $ access_token=$(echo $response | python -c 'import sys, json; print (json.load(sys.stdin)["access_token"])') 
 ```
 
-4. Use the Token:
+4. Use the Token to query an Azure API:
 
-```console
+```
 $ SubID="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
 $ RG="myLab2RG"
 
@@ -611,7 +612,7 @@ Output:
 
 >**Note:** In case you want to validate how MSI works, you can remove the role previously assigned and run the tests again.
 
-```console
+```
 $ az role assignment delete --assignee XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX --role reader --scope /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/ResourceGroups/myLab2RG
 ```
 
@@ -627,9 +628,11 @@ Output:
 
 To delete the resources that were created as part of this lab, you can run the following command:
 
-```console
+```
 $ az group delete --name myLab2RG
 ```
+
+[Return to Table of Contents](#security-labs)
 
 # <a name="data-access"></a>Lab 3: Data Access Management
 
@@ -641,7 +644,7 @@ From Azure Cloud Shell on [Azure Portal](https://portal.azure.com), perform the 
 
 #### Create a [Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
 
-```console
+```
 $ az group create --name myLab3RG --location eastus2
 ```
 
@@ -663,7 +666,7 @@ Output:
 
 >**Important:** The Storage account name is global and unique, so you need to use a random name. In the following example we are using `mylab3stgacct`. Note that it accepts between 3-24 characters and all lower-case.
 
-```console
+```
 $ az storage account create --name mylab3stgacct --resource-group myLab3RG --sku Standard_LRS --location eastus2
 ```
 
@@ -697,7 +700,7 @@ Output:
 
 #### Create a storage container to store blobs
 
-```console
+```
 $ az storage container create --name mylab3stgcontainer --account-name mylab3stgacct
 ```
 
@@ -713,7 +716,7 @@ Output:
 
 First, let us see if there is any policy associated to the storage container recently created:
 
-```console
+```
 $ az storage container policy list --container mylab3stgcontainer --account-name mylab3stgacct
 ```
 
@@ -742,7 +745,7 @@ Output:
 
 Execute the command below to liste the pol
 
-```console
+```
 $ az storage container policy list --container mylab3stgcontainer --account-name mylab3stgacct
 ```
 
@@ -760,7 +763,7 @@ Output:
 
 #### Create a SAS key based on Stored Access Policy
 
-```console
+```
 $ az storage container generate-sas --name mylab3stgcontainer --account-name mylab3stgacct --policy-name mylab3policy1
 ```
 
@@ -774,7 +777,7 @@ Output:
 
 Upload a file to the storage account:
 
-```console
+```
 $ sas="sv=2018-03-28&si=mylab3policy1&sr=c&sig=71zzMlgFsRhNiqiBirNlWNAN8zQVdv0Xi36Q2SKoKNo%3D"
 
 $ echo "MyLab3 Upload Test" > MyLab3File.txt
@@ -784,7 +787,7 @@ $ az storage blob upload --name MyLab3File.txt --container-name mylab3stgcontain
 
 Validate you can access the blob as follow:
 
-```console
+```
 $ curl "https://mylab3stgacct.blob.core.windows.net/mylab3stgcontainer/MyLab3File.txt?"$sas
 ```
 
@@ -793,7 +796,7 @@ $ curl "https://mylab3stgacct.blob.core.windows.net/mylab3stgcontainer/MyLab3Fil
 
 Update the `Stored Access Policy` expiring date and try to access it again, as follow:
 
-```console
+```
 $ start=`date -d "-30 minutes" '+%Y-%m-%dT%H:%MZ'`
 $ end=`date -d "-30 minutes" '+%Y-%m-%dT%H:%MZ'`
 $ az storage container policy update --name mylab3policy1 --container-name mylab3stgcontainer --account-name mylab3stgacct --permissions dwrl --start $start --expiry $end
@@ -810,7 +813,7 @@ Output:
 
 If you try to access the same blob, you should get an error message, as follow:
 
-```console
+```
 $ curl "https://mylab3stgacct.blob.core.windows.net/mylab3stgcontainer/MyLab3File.txt?"$sas
 ```
 
@@ -834,9 +837,11 @@ Time:2018-10-31T21:14:09.2705135Z</Message>
 
 To delete the resources that were created as part of this lab, you can run the following command:
 
-```console
+```
 $ az group delete --name myLab3RG
 ```
+
+[Return to Table of Contents](#security-labs)
 
 # <a name="governance"></a>Lab 4: Governance
 
@@ -847,25 +852,25 @@ From Azure Cloud Shell on [Azure Portal](https://portal.azure.com), perform the 
 
 ![AzureCloudShell](media/azurecloudshell.png)
 
-#### Create a [Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
-
-```console
-$ az group create --name myLab4RG --location eastus2
-```
-
 #### Prerequesites
 
 Register the Policy Insights resource provider using Azure CLI. Registering the resource provider makes sure that your subscription works with it. To register a resource provider, you must have permission to perform the register action operation for the resource provider. This operation is included in the Contributor and Owner roles. Run the following command to register the resource provider:
 
-```console
+```
 $ az provider register --namespace 'Microsoft.PolicyInsights'
+```
+
+#### Create a [Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
+
+```
+$ az group create --name myLab4RG --location eastus2
 ```
 
 #### Define and Assign the ARM Policy
 
 In our example, we will define a policy that restricts deployment to West US 2 region. Create a policy definition with the following command.
 
-```console
+```
 $ az policy definition create --name MyallowedLocations --display-name MyallowedLocations --rules '{
                             "if": {
                                 "not": {
@@ -939,7 +944,7 @@ Output:
 
 Let's try to create a resource (VM) in in the resource group `myLab4RG`:
 
-```console
+```
 $ az vm create \
   --resource-group myLab4RG \
   --name myLab4Vm \
@@ -966,7 +971,7 @@ Exception Details:
 
 To delete the resources that were created as part of this lab, you can run the following commands:
 
-```console
+```
 $ az group delete --name myLab4RG
 
 $ az policy assignment delete --name MyallowedLocations
@@ -974,6 +979,7 @@ $ az policy assignment delete --name MyallowedLocations
 $ az policy definition delete --name MyallowedLocations 
 ```
 
+[Return to Table of Contents](#security-labs)
+
 # <a name="unified-control"></a>Lab 5: Unified Visibility Control
 
-# <a name="operational-controls"></a>Lab 6: Operational Security Controls
