@@ -2,11 +2,11 @@
 
 In this tutorial, we have a series of mini labs related to different Azure security topics that are discussed as part of the "Azure Security Overview" session delivered by [Paulo Renato](https://www.linkedin.com/in/paulorenato/). The presentation can be obtained upon contact. The areas we chose for this tutorial are described as follow: 
 
-* [Azure Networking](#azure-networking)
-* [Identity & Access Management](#identity-and-access)
-* [Data Access Management](#data-access)
-* [Governance](#governance)
-* [Unified Visibility Control](#unified-control)
+* [Lab 1: Azure Networking](#azure-networking)
+* [Lab 2: Identity & Access Management](#identity-and-access)
+* [Lab 3: Data Access Management](#data-access)
+* [Lab 4: Governance](#governance)
+* [Lab 5: Unified Visibility Control](#unified-control)
 
 ## Before you begin
 
@@ -594,7 +594,7 @@ $ response=$(curl -H Metadata:true "http://169.254.169.254/metadata/identity/oau
 $ access_token=$(echo $response | python -c 'import sys, json; print (json.load(sys.stdin)["access_token"])') 
 ```
 
-4. Use the Token to query an Azure API:
+4. Use the Token to query an Azure API. Make sure you replace XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX with your real subscription id:
 
 ```
 $ SubID="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
@@ -983,3 +983,4 @@ $ az policy definition delete --name MyallowedLocations
 
 # <a name="unified-control"></a>Lab 5: Unified Visibility Control
 
+[Return to Table of Contents](#security-labs)
