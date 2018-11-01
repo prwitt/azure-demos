@@ -102,7 +102,7 @@ $ az network nsg create \
 
 #### Create security rules
 
-The following example creates a rule that allows traffic inbound from the internet to the myWebServers application security group over ports 80 and 443:
+The following example creates a rule that allows traffic inbound from the internet to the `myWebServers` application security group over ports 80 and 443:
 
 ```console
 $ az network nsg rule create \
@@ -163,7 +163,7 @@ Output:
 
 ```
 
-The following example creates a rule that allows traffic inbound from the Internet to the myMgmtServers application security group over port 22:
+The following example creates a rule that allows traffic inbound from the Internet to the `myMgmtServers` application security group over port 22:
 
 ```console
 $ az network nsg rule create \
@@ -220,11 +220,11 @@ $ az network nsg rule create \
 }
 ```
 
->**Note:** In this lab, SSH (port 22) is exposed to the internet for the myAsgMgmtServers VM. For production environments, instead of exposing port 22 to the internet, it's recommended that you connect to Azure resources that you want to manage using a VPN or private network connection.
+>**Note:** In this lab, SSH (port 22) is exposed to the internet for the `myAsgMgmtServers` VM. For production environments, instead of exposing port 22 to the internet, it's recommended that you connect to Azure resources that you want to manage using a VPN or private network connection.
 
 #### Create a Virtual Network
 
-The following example creates a virtual named myLab1VNet:
+The following example creates a virtual named `myLab1VNet`:
 
 ```console
 $ az network vnet create \
@@ -266,7 +266,7 @@ Output:
 }
 ```
 
-The following example adds a subnet named myLab1Subnet to the virtual network and associates the myLab1Nsg network security group to it:
+The following example adds a subnet named myLab1Subnet to the virtual network and associates the `myLab1Nsg` network security group to it:
 
 ```console
 $ az network vnet subnet create \
@@ -319,7 +319,7 @@ Output:
 
 #### Create a Virtual Machine on the resource group that was created in the previous steps
 
-The following example creates a VM that will serve as a web server. The `--asgs myAsgWebServers` option causes Azure to make the network interface it creates for the VM a member of the myAsgWebServers application security group.
+The following example creates a VM that will serve as a web server. The `--asgs myAsgWebServers` option causes Azure to make the network interface it creates for the VM a member of the `myAsgWebServers` application security group.
 
 The `--nsg ""` option is specified to prevent Azure from creating a default network security group for the network interface Azure creates when it creates the VM. To streamline this article, a password is used.
 
@@ -402,7 +402,7 @@ id_rsa                                             100% 1679     1.6KB/s   00:00
 id_rsa.pub                                         100%  380     0.4KB/s   00:00
 ```
 
-Use the command that follows to create an SSH session with the myLab1VmMgmt VM. Replace with the public IP address of your VM. In the example above, the IP address is 40.70.204.109.
+Use the command that follows to create an SSH session with the `myLab1VmMgmt` VM. Replace with the public IP address of your VM. In the example above, the IP address is 40.70.204.109.
 
 ```console
 $ ssh azureuser@40.70.204.109
@@ -410,13 +410,13 @@ $ ssh azureuser@40.70.204.109
 
 >**Note:** The connection succeeds, because port 22 is allowed inbound from the `Internet` to the `myAsgMgmtServers` application security group that the network interface attached to the `myLab1VmMgmt` VM is in.
 
-Use the following command to SSH to the myLab1VmWeb VM from the myLab1VmMgmt VM:
+Use the following command to SSH to the myLab1VmWeb VM from the `myLab1VmMgmt` VM:
 
 ```console
 $ ssh azureuser@MyLab1VmWeb
 ```
 
->**Note:** The connection succeeds because a default security rule within each network security group allows traffic over all ports between all IP addresses within a virtual network. You can't SSH to the myVmWeb VM from the Internet because the security rule for the myAsgWebServers doesn't allow port 22 inbound from the Internet.
+>**Note:** The connection succeeds because a default security rule within each network security group allows traffic over all ports between all IP addresses within a virtual network. You can't SSH to the myVmWeb VM from the Internet because the security rule for the `myAsgWebServers` doesn't allow port 22 inbound from the Internet.
 
 Use the following commands to install the nginx web server on the myVmWeb VM:
 
@@ -428,7 +428,7 @@ sudo apt-get -y update
 sudo apt-get -y install nginx
 ```
 
->**Note:** The myLab1VmWeb VM is allowed outbound to the Internet to retrieve nginx because a default security rule allows all outbound traffic to the Internet. Exit the myLab1VmWeb SSH session, which leaves you at the `azureuser@myLab1VmMgmt:~$` prompt of the `myLab1VmMgmt` VM. To retrieve the nginx welcome screen from the `myLab1VmWeb` VM, enter the following command:
+>**Note:** The `myLab1VmWeb` VM is allowed outbound to the Internet to retrieve nginx because a default security rule allows all outbound traffic to the Internet. Exit the myLab1VmWeb SSH session, which leaves you at the `azureuser@myLab1VmMgmt:~$` prompt of the `myLab1VmMgmt` VM. To retrieve the nginx welcome screen from the `myLab1VmWeb` VM, enter the following command:
 
 ```console
 $ curl myLab1VMWeb
@@ -631,7 +631,7 @@ To delete the resources that were created as part of this lab, you can run the f
 $ az group delete --name myLab2RG
 ```
 
-## <a name="data-access"></a>ab 3: Data Access Management
+## <a name="data-access"></a>Lab 3: Data Access Management
 
 This mini lab will focus on [Shared Access Signature](https://docs.microsoft.com/en-us/azure/storage/common/storage-dotnet-shared-access-signature-part-1).
 
@@ -690,46 +690,8 @@ Output:
       "queue": null,
       "table": null
     }
-  },
-  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myLab3RG/providers/Microsoft.Storage/storageAccounts/mylab3stgacct",
-  "identity": null,
-  "isHnsEnabled": null,
-  "kind": "Storage",
-  "lastGeoFailoverTime": null,
-  "location": "eastus2",
-  "name": "mylab3stgacct",
-  "networkRuleSet": {
-    "bypass": "AzureServices",
-    "defaultAction": "Allow",
-    "ipRules": [],
-    "virtualNetworkRules": []
-  },
-  "primaryEndpoints": {
-    "blob": "https://mylab3stgacct.blob.core.windows.net/",
-    "dfs": null,
-    "file": "https://mylab3stgacct.file.core.windows.net/",
-    "queue": "https://mylab3stgacct.queue.core.windows.net/",
-    "table": "https://mylab3stgacct.table.core.windows.net/",
-    "web": null
-  },
-  "primaryLocation": "eastus2",
-  "provisioningState": "Succeeded",
-  "resourceGroup": "myLab3RG",
-  "secondaryEndpoints": null,
-  "secondaryLocation": null,
-  "sku": {
-    "capabilities": null,
-    "kind": null,
-    "locations": null,
-    "name": "Standard_LRS",
-    "resourceType": null,
-    "restrictions": null,
-    "tier": "Standard"
-  },
-  "statusOfPrimary": "available",
-  "statusOfSecondary": null,
-  "tags": {},
-  "type": "Microsoft.Storage/storageAccounts"
+    ...
+    <removed output>
 }
 ```
 
@@ -876,9 +838,141 @@ To delete the resources that were created as part of this lab, you can run the f
 $ az group delete --name myLab3RG
 ```
 
-
-
 ## <a name="governance"></a>Lab 4: Governance
+
+This mini lab will focus on [Azure Resource Manager Policy](https://docs.microsoft.com/en-us/azure/governance/policy/overview). Here you will see how to restrict a deployment to a given region.
+You can find other policy samples [here](https://docs.microsoft.com/en-us/azure/governance/policy/samples/).
+
+From Azure Cloud Shell on [Azure Portal](https://portal.azure.com), perform the following steps:
+
+![AzureCloudShell](media/azurecloudshell.png)
+
+#### Create a [Resource Group](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-overview#resource-groups).
+
+```console
+$ az group create --name myLab4RG --location eastus2
+```
+
+#### Prerequesites
+
+Register the Policy Insights resource provider using Azure CLI. Registering the resource provider makes sure that your subscription works with it. To register a resource provider, you must have permission to perform the register action operation for the resource provider. This operation is included in the Contributor and Owner roles. Run the following command to register the resource provider:
+
+```console
+$ az provider register --namespace 'Microsoft.PolicyInsights'
+```
+
+#### Define and Assign the ARM Policy
+
+In our example, we will define a policy that restricts deployment to West US 2 region. Create a policy definition with the following command.
+
+```console
+$ az policy definition create --name MyallowedLocations --display-name MyallowedLocations --rules '{
+                            "if": {
+                                "not": {
+                                    "field": "location",
+                                    "in": ["westus2"] 
+                                }
+                            },
+                            "then": {
+                                "effect": "deny"
+                            }
+                        }'
+```
+
+Output:
+
+```console
+{
+  "description": null,
+  "displayName": null,
+  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyDefinitions/MyallowedLocations",
+  "metadata": null,
+  "mode": null,
+  "name": "MyallowedLocations",
+  "parameters": {},
+  "policyRule": {
+    "if": {
+      "not": {
+        "field": "location",
+        "in": [
+          "westus2"
+        ]
+      }
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "policyType": "Custom",
+  "type": "Microsoft.Authorization/policyDefinitions"
+}
+```
+
+Now, let's assign the policy to the subscription scope. Don't forget to replace `XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX` with your subscription ID.
+
+```console
+$ az policy assignment create --policy MyallowedLocations --name MyallowedLocations --display-name MyallowedLocations --scope /subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+```
+
+Output:
+
+```console
+{
+  "description": null,
+  "displayName": null,
+  "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyAssignments/4a5cdb94-7b3a-4d5d-9efa-a3f1dd7c5ddb",
+  "metadata": null,
+  "name": "4a5cdb94-7b3a-4d5d-9efa-a3f1dd7c5ddb",
+  "notScopes": null,
+  "parameters": null,
+  "policyDefinitionId": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyDefinitions/MyallowedLocations",
+  "scope": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",
+  "sku": {
+    "name": "A0",
+    "tier": "Free"
+  },
+  "type": "Microsoft.Authorization/policyAssignments"
+}
+```
+
+#### Test the policy
+
+Let's try to create a resource (VM) in in the resource group `myLab4RG`:
+
+```console
+$ az vm create \
+  --resource-group myLab4RG \
+  --name myLab4Vm \
+  --image UbuntuLTS \
+  --admin-username azureuser \
+  --generate-ssh-keys
+```
+
+If the policy was applied correctly, the deployment will fail with the following error message:
+
+```console
+Azure Error: InvalidTemplateDeployment
+Message: The template deployment failed with multiple errors. Please see details for more information.
+Exception Details:
+	Error Code: RequestDisallowedByPolicy
+	Message: Resource 'myLab4VmVNET' was disallowed by policy. Policy identifiers: '[{"policyAssignment":{"name":"2469dc55-706d-4cef-8a17-ad6076e8160a","id":"/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyAssignments/2469dc55-706d-4cef-8a17-ad6076e8160a"},"policyDefinition":{"name":"MyallowedLocations","id":"/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyDefinitions/MyallowedLocations"}},{"policyAssignment":{"name":"4a5cdb94-7b3a-4d5d-9efa-a3f1dd7c5ddb","id":"/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyAssignments/4a5cdb94-7b3a-4d5d-9efa-a3f1dd7c5ddb"},"policyDefinition":{"name":"MyallowedLocations","id":"/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/providers/Microsoft.Authorization/policyDefinitions/MyallowedLocations"}}]'.
+	Target: myLab4VmVNET
+```
+
+>**Note:** The resource group `myLab4RG` was created in the `East US 2` region, while the policy restricts the deployment at `West US 2`.
+
+
+#### Lab resources cleanup:
+
+To delete the resources that were created as part of this lab, you can run the following commands:
+
+```console
+$ az group delete --name myLab4RG
+
+$ az policy assignment delete --name MyallowedLocations
+
+$ az policy definition delete --name MyallowedLocations 
+```
 
 ## <a name="unified-control"></a>Lab 5: Unified Visibility Control
 
