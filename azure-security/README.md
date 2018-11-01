@@ -12,9 +12,9 @@ In this tutorial, we have a series of mini labs related to different Azure secur
 ## Before you begin
 
 * Make sure you have access to an [Azure Account](https://azure.microsoft.com/en-us/free/).
-* The tutorial is wholly based on [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell/) and the Azure Portal, and does not require additional software installation on the client side.
+* The tutorial is wholly based on [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell/) and the [Azure Portal](https://portal.azure.com), and does not require additional software installation on the client side.
 
-## <a name="azure-networking"></a>Lab 1: Azure Networking
+# <a name="azure-networking"></a>Lab 1: Azure Networking
 
 This mini lab will focus on the capabilities to filter network traffic with network security group.
 
@@ -460,7 +460,7 @@ To delete the resources that were created as part of this lab, you can run the f
 $ az group delete --name myLab1RG
 ```
 
-## <a name="identity-and-access"></a>Lab 2: Identity & Access Management
+# <a name="identity-and-access"></a>Lab 2: Identity & Access Management
 
 This mini lab will focus on [Managed Identities](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview).
 
@@ -631,7 +631,7 @@ To delete the resources that were created as part of this lab, you can run the f
 $ az group delete --name myLab2RG
 ```
 
-## <a name="data-access"></a>Lab 3: Data Access Management
+# <a name="data-access"></a>Lab 3: Data Access Management
 
 This mini lab will focus on [Shared Access Signature](https://docs.microsoft.com/en-us/azure/storage/common/storage-dotnet-shared-access-signature-part-1).
 
@@ -838,7 +838,7 @@ To delete the resources that were created as part of this lab, you can run the f
 $ az group delete --name myLab3RG
 ```
 
-## <a name="governance"></a>Lab 4: Governance
+# <a name="governance"></a>Lab 4: Governance
 
 This mini lab will focus on [Azure Resource Manager Policy](https://docs.microsoft.com/en-us/azure/governance/policy/overview). Here you will see how to restrict a deployment to a given region.
 You can find other policy samples [here](https://docs.microsoft.com/en-us/azure/governance/policy/samples/).
@@ -974,6 +974,6 @@ $ az policy assignment delete --name MyallowedLocations
 $ az policy definition delete --name MyallowedLocations 
 ```
 
-## <a name="unified-control"></a>Lab 5: Unified Visibility Control
+# <a name="unified-control"></a>Lab 5: Unified Visibility Control
 
-## <a name="operational-controls"></a>Lab 6: Operational Security Controls
+# <a name="operational-controls"></a>Lab 6: Operational Security Controls
