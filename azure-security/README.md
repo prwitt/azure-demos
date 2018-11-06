@@ -1,6 +1,6 @@
 # <a name="security-labs"><a/>Azure Security Labs
 
-In this tutorial, we have a series of mini labs related to different Azure security topics that are discussed as part of the "Azure Security Overview" session delivered by [Paulo Renato](https://www.linkedin.com/in/paulorenato/). The presentation can be obtained upon contact. The areas we chose for this tutorial are described as follow: 
+In this tutorial, we have a series of mini labs related to different Azure security topics covered in greater detail as part of the "Azure Security Overview" session delivered by [Paulo Renato](https://www.linkedin.com/in/paulorenato/). The presentation can be shared upon request. The areas we chose for this tutorial are described as follow: 
 
 * [Lab 1: Azure Networking](#azure-networking)
 * [Lab 2: Identity & Access Management](#identity-and-access)
@@ -11,11 +11,13 @@ In this tutorial, we have a series of mini labs related to different Azure secur
 ## Before you begin
 
 * Make sure you have access to an [Azure Account](https://azure.microsoft.com/en-us/free/).
-* The tutorial is wholly based on [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell/) and the [Azure Portal](https://portal.azure.com), and does not require additional software installation on the client side.
+* The tutorial is wholly based on [Azure Cloud Shell](https://azure.microsoft.com/en-us/features/cloud-shell/) and the [Azure Portal](https://portal.azure.com) and does not require additional software installation on the client side.
+
+>**Note:** You are free to use your company's Azure subscription for this lab series, but make sure you have at least [contributor role](https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles#contributor) assigned to your user, as we will perform configuration that requires write access to the following resource providers: Networking, AAD, Storage Accounts and Policy. In case you do not have contributor access to your subscription, you can still apply for a free Azure account using the first link above.
 
 # <a name="azure-networking"></a>Lab 1: Azure Networking
 
-This mini lab will focus on the capabilities to filter network traffic with network security group.
+This mini-lab will focus on the capabilities to filter network traffic with network security group.
 
 From Azure Cloud Shell on [Azure Portal](https://portal.azure.com), perform the following steps:
 
@@ -41,7 +43,7 @@ Output:
 }
 ```
 
-#### Create a an application security group
+#### Create an application security group
 
 An application security group enables you to group servers with similar port filtering requirements.
 
@@ -291,18 +293,7 @@ Output:
   "name": "myLab1Subnet",
   "networkSecurityGroup": {
     "defaultSecurityRules": null,
-    "etag": null,
-    "id": "/subscriptions/XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX/resourceGroups/myLab1RG/providers/Microsoft.Network/networkSecurityGroups/myLab1Nsg",
-    "location": null,
-    "name": null,
-    "networkInterfaces": null,
-    "provisioningState": null,
-    "resourceGroup": "myLab1RG",
-    "resourceGuid": null,
-    "securityRules": null,
-    "subnets": null,
-    "tags": null,
-    "type": null
+<SNIP>
   },
   "provisioningState": "Succeeded",
   "purpose": null,
@@ -449,7 +440,7 @@ Output:
 ...
 ```
 
-Logout of the `myLab1VmMgmt` VM. To confirm that you can access the `myLab1VmWeb` web server from outside of Azure, enter `curl <publicIpAddress>` from your own computer. The connection succeeds, because port 80 is allowed inbound from the Internet to the `myAsgWebServers` application security group that the network interface attached to the `myLab1VmWeb` VM is in. You can try to access `myLab1VmWeb` via SSH and you will notice that it is not working, as it is allowed only from the `myLab1VmMgmt`.
+Logout from the `myLab1VmMgmt` VM. To confirm that you can access the `myLab1VmWeb` web server from outside of Azure, enter `curl <publicIpAddress>` from your own computer. The connection succeeds because port 80 is allowed inbound from the Internet to the `myAsgWebServers` application security group that the network interface attached to the `myLab1VmWeb` VM is in. You can try to access `myLab1VmWeb` via SSH and you will notice that it is not working, as it is allowed only from the `myLab1VmMgmt`.
 
 #### Lab resources cleanup:
 
@@ -463,7 +454,7 @@ $ az group delete --name myLab1RG
 
 # <a name="identity-and-access"></a>Lab 2: Identity & Access Management
 
-This mini lab will focus on [Managed Identities](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview).
+This mini-lab will focus on [Managed Identities](https://docs.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview).
 
 From Azure Cloud Shell on [Azure Portal](https://portal.azure.com), perform the following steps:
 
@@ -636,7 +627,7 @@ $ az group delete --name myLab2RG
 
 # <a name="data-access"></a>Lab 3: Data Access Management
 
-This mini lab will focus on [Shared Access Signature](https://docs.microsoft.com/en-us/azure/storage/common/storage-dotnet-shared-access-signature-part-1).
+This mini-lab will focus on [Shared Access Signature](https://docs.microsoft.com/en-us/azure/storage/common/storage-dotnet-shared-access-signature-part-1).
 
 From Azure Cloud Shell on [Azure Portal](https://portal.azure.com), perform the following steps:
 
@@ -845,7 +836,7 @@ $ az group delete --name myLab3RG
 
 # <a name="governance"></a>Lab 4: Governance
 
-This mini lab will focus on [Azure Resource Manager Policy](https://docs.microsoft.com/en-us/azure/governance/policy/overview). Here you will see how to restrict a deployment to a given region.
+This mini-lab will focus on [Azure Resource Manager Policy](https://docs.microsoft.com/en-us/azure/governance/policy/overview). Here you will see how to restrict a deployment to a given region.
 You can find other policy samples [here](https://docs.microsoft.com/en-us/azure/governance/policy/samples/).
 
 From Azure Cloud Shell on [Azure Portal](https://portal.azure.com), perform the following steps:
