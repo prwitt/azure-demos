@@ -266,6 +266,7 @@ Output:
   }
 }
 ```
+#### Create a Subnet
 
 The following example adds a subnet named myLab1Subnet to the virtual network and associates the `myLab1Nsg` network security group to it:
 
@@ -595,6 +596,8 @@ $ url="https://management.azure.com/subscriptions/$SubID/resourceGroups/$RG?api-
 
 $ curl $url -H "x-ms-version: 2017-11-09" -H "Authorization: Bearer $access_token"
 ```
+
+>**Note:** The output below is an example of a successful resource query, validating you have access to the endpoint through the permissions that were given to the VM (Reader role at the Resource Group scope).
 
 Output:
 ```console
@@ -974,4 +977,9 @@ $ az policy definition delete --name MyallowedLocations
 
 # <a name="unified-control"></a>Lab 5: Unified Visibility Control
 
+For the Unified Visibility Control, you can leverage the [Azure Log Analytics Demo](https://portal.loganalytics.io/demo#/discover/home) environment which includes an pre-built lab that allows you to test and validate the main concepts of Log Analytics, its powerful query language, and the ability to create charts and dashboars.
+
+I plan to add more labs in this section in the future.
+
 [Return to Table of Contents](#security-labs)
+
