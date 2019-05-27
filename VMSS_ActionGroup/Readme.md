@@ -1,5 +1,4 @@
-
-#Solution Overview
+# Solution Overview
 
 The purpose of this content is to describe how **"Alert Rule"** and **"Action Group"** on Azure Monitor for VMSS can trigger an API call to remove a VM instance out of the Azure Load Balancer backend pool.
 
@@ -23,11 +22,11 @@ URL https://<endpoint>/subscriptions/{subscriptionId}/resourceGroups/{resourceG
 2. Configure Action Group
 3. Configure Alert Rule
 
-1. [Here](https://docs.microsoft.com/en-us/azure/automation/automation-quickstart-create-account) you can read more on how to configure the Azure Automation Runbook. The following Python Script performs the necessary tasks to remove a VM instance from the Load Balancer backend pool. Note that it is just a prototype and there are several points to be optimized, e.g., parsing the ["Webhookdata"](https://docs.microsoft.com/en-us/azure/automation/automation-first-runbook-textual-python2#use-input-parameters) sent as an input parameter as a JSON object to the Python script at the Automation Runbook via the Action Group, and simplify the authentication piece as the Automation Runbook makes it simpler. The prototype still work though.
+**1)** [Here](https://docs.microsoft.com/en-us/azure/automation/automation-quickstart-create-account) you can read more on how to configure the Azure Automation Runbook. The following Python Script performs the necessary tasks to remove a VM instance from the Load Balancer backend pool. Note that it is just a prototype and there are several points to be optimized, e.g., parsing the ["Webhookdata"](https://docs.microsoft.com/en-us/azure/automation/automation-first-runbook-textual-python2#use-input-parameters) sent as an input parameter as a JSON object to the Python script at the Automation Runbook via the Action Group, and simplify the authentication piece as the Automation Runbook makes it simpler. The prototype still work though.
 
 On VMSS, we had to configure the following:
 
-2. Create "Action Group"
+**2)** Create "Action Group"
 
 * Under the VMSS blade, go to Monitor > Alerts
 * Under Alerts, click on "Manage actions"
@@ -37,7 +36,7 @@ In the testing scenario, we created an Action group that will send an e-mail and
 
 Here you have more information on how to Create an Action Group.
 
-3. Create a "New alert rule"
+**3)** Create a "New alert rule"
 
 * Under the VMSS blade, go to Monitor > Alerts
 * Under Alerts, click on "New alert rule". The "Resource" will be selected by default. Create a condition by configuring a signal logic. There are dozens of "Signal Type" for you to choose.
